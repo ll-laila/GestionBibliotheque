@@ -4,9 +4,14 @@ pipeline {
         MAVEN_HOME = tool 'Maven'
     }
     stages {
+        stage('Cleanup') {
+            steps {
+                deleteDir()
+            }
+        }
         stage('Checkout') {
             steps {
-                git 'https://github.com/ll-laila/GestionBibliotheque.git'
+                git url: 'https://github.com/ll-laila/GestionBibliotheque'
             }
         }
         stage('Build') {
@@ -21,7 +26,7 @@ pipeline {
         }
         stage('Quality Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube_server') {
+                withSonarQubeEnv('SonarQube') {
                     sh '${MAVEN_HOME}/bin/mvn sonar:sonar'
                 }
             }
