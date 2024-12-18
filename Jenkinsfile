@@ -4,9 +4,14 @@ pipeline {
         MAVEN_HOME = tool 'Maven'
     }
     stages {
+        stage('Cleanup') {
+            steps {
+                deleteDir()
+            }
+        }
         stage('Checkout') {
             steps {
-             git branch: 'main', url: 'https://github.com/ll-laila/GestionBibliotheque.git'
+               git url: 'https://github.com/ll-laila/GestionBibliotheque.git', branch: 'main'
             }
         }
         stage('Build') {
@@ -32,5 +37,16 @@ pipeline {
             }
         }
     }
-  
+    post {
+        success {
+            emailext to: 'lailatimasli1@gmail.com',
+                subject: 'Build Success',
+                body: 'Le build a été complété avec succès.'
+        }
+        failure {
+            emailext to: 'lailatimasli1@gmail.com',
+                subject: 'Build Failed',
+                body: 'Le build a échoué.'
+        }
+    }
 }
