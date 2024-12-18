@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/ll-laila/GestionBibliotheque'
+                git url: 'https://github.com/ll-laila/GestionBibliotheque.git'
             }
         }
         stage('Build') {
