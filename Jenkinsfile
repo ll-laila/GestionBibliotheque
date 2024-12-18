@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/ll-laila/GestionBibliotheque.git'
+               git url: 'https://github.com/ll-laila/GestionBibliotheque.git', branch: 'main'
             }
         }
         stage('Build') {
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Quality Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('SonarQube_server') {
                     sh '${MAVEN_HOME}/bin/mvn sonar:sonar'
                 }
             }
