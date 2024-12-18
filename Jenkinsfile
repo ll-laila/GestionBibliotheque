@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Quality Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('SonarQube_server') {
                     sh '${MAVEN_HOME}/bin/mvn sonar:sonar'
                 }
             }
