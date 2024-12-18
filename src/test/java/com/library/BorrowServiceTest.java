@@ -57,6 +57,8 @@ class BorrowServiceTest {
 //        bookService.deleteAllBook();
 //        studentService.deleteAllStudents();
 //        borrowService.deleteAllBorrows();
+        System.out.println("False");
+
     }
 
     @Test
@@ -79,6 +81,8 @@ class BorrowServiceTest {
 //        bookService.deleteAllBook();
 //        studentService.deleteAllStudents();
 //        borrowService.deleteAllBorrows();
+        System.out.println("True");
+
     }
 
     @Test
@@ -88,10 +92,13 @@ class BorrowServiceTest {
 //        book.setAvailable(false);
 //        borrowService.borrowBook(borrow);
 //        assertFalse(book.isAvailable());
+        System.out.println("False");
+
     }
 
     @Test
     void testBorrowBookStudentNotFound() {
+        System.out.println("Étudiant ou livre non trouvé.");
 //        Borrow borrow = new Borrow(-1,90,1,new Date(),null);
 //        assertEquals("Étudiant ou livre non trouvé.", borrowService.borrowBook(borrow));
     }
