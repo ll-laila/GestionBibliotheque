@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StudentService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mon-projet</a> &gt; <a href="index.source.html" class="el_package">com.library.service</a> &gt; <span class="el_source">StudentService.java</span></div><h1>StudentService.java</h1><pre class="source lang-java linenums">package com.library.service;
+import com.library.dao.StudentDAO;
+import com.library.model.Student;
+import java.util.List;
+import java.util.Optional;
+
+
+public class StudentService {
+    private final StudentDAO studentDAO;
+
+
+<span class="fc" id="L12">    public StudentService(StudentDAO studentDAO) {</span>
+<span class="fc" id="L13">        this.studentDAO = studentDAO;</span>
+<span class="fc" id="L14">    }</span>
+
+
+    public void addStudent(Student student) {
+<span class="fc" id="L18">        studentDAO.addStudent(student);</span>
+<span class="fc" id="L19">    }</span>
+
+
+    public void displayStudents() {
+<span class="nc" id="L23">        List&lt;Student&gt; students = studentDAO.getAllStudents();</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        for (Student student : students) {</span>
+<span class="nc" id="L25">            System.out.println(&quot;ID: &quot; + student.getId() + &quot; | Nom: &quot; + student.getName());</span>
+<span class="nc" id="L26">        }</span>
+<span class="nc" id="L27">    }</span>
+
+    public List&lt;Student&gt; allStudents() {
+<span class="fc" id="L30">        return studentDAO.getAllStudents();</span>
+    }
+
+
+    public Optional&lt;Student&gt; findStudentById(int id) {
+<span class="fc" id="L35">        return studentDAO.getStudentById(id);</span>
+    }
+
+    public Optional&lt;Student&gt; getStudentByName(String name) {
+<span class="nc" id="L39">        return studentDAO.getStudentByName(name);</span>
+    }
+
+
+    public void updateStudent(Student student) {
+<span class="fc" id="L44">        studentDAO.updateStudent(student);</span>
+<span class="fc" id="L45">    }</span>
+
+
+    public void deleteStudent(int id) {
+<span class="fc" id="L49">        studentDAO.deleteStudent(id);</span>
+<span class="fc" id="L50">    }</span>
+
+    public void deleteAllStudents() {
+<span class="fc" id="L53">        studentDAO.deleteAllStudents();</span>
+<span class="fc" id="L54">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

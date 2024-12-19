@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mon-projet</a> &gt; <a href="index.source.html" class="el_package">com.library.dao</a> &gt; <span class="el_source">BookDAO.java</span></div><h1>BookDAO.java</h1><pre class="source lang-java linenums">package com.library.dao;
+
+import com.library.model.Book;
+import com.library.util.DbConnection;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+<span class="fc" id="L14">public class BookDAO {</span>
+
+<span class="fc" id="L16">    private static final Logger LOGGER = Logger.getLogger(StudentDAO.class.getName());</span>
+
+    public void add(Book book) {
+<span class="fc" id="L19">        String sql = &quot;INSERT INTO books (id,title, author, isbn, published_year,available) VALUES (?,?,?, ?, ?, ?)&quot;;</span>
+<span class="fc" id="L20">        try (Connection connection = DbConnection.getConnection();</span>
+<span class="fc" id="L21">             PreparedStatement statement = connection.prepareStatement(sql)) {</span>
+<span class="fc" id="L22">            statement.setInt(1, book.getId());</span>
+<span class="fc" id="L23">            statement.setString(2, book.getTitle());</span>
+<span class="fc" id="L24">            statement.setString(3, book.getAuthor());</span>
+<span class="fc" id="L25">            statement.setString(4, book.getIsbn());</span>
+<span class="fc" id="L26">            statement.setString(5, book.getPublishedYear());</span>
+<span class="fc" id="L27">            statement.setBoolean(6, book.isAvailable());</span>
+            
+<span class="fc" id="L29">            int rowsInserted = statement.executeUpdate();</span>
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">            if (rowsInserted &gt; 0) {</span>
+<span class="fc" id="L31">                System.out.println(&quot;Livre inséré avec succès !&quot;);</span>
+            }
+<span class="nc" id="L33">        } catch (SQLException e) {</span>
+<span class="nc" id="L34">            System.err.println(&quot;Erreur lors de l'ajout du livre : &quot; + e.getMessage());</span>
+<span class="fc" id="L35">        }</span>
+<span class="fc" id="L36">    }</span>
+
+
+
+
+    public Book getBookByIsbn(String isbn) {
+<span class="nc" id="L42">        String sql = &quot;SELECT * FROM books WHERE isbn = ?&quot;;</span>
+<span class="nc" id="L43">        Book book = null;</span>
+        
+<span class="nc" id="L45">        try (Connection connection = DbConnection.getConnection();</span>
+<span class="nc" id="L46">             PreparedStatement statement = connection.prepareStatement(sql)) {</span>
+             
+<span class="nc" id="L48">            statement.setString(1, isbn);</span>
+<span class="nc" id="L49">            ResultSet resultSet = statement.executeQuery();</span>
+            
+<span class="nc bnc" id="L51" title="All 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="nc" id="L52">                book = new Book();</span>
+<span class="nc" id="L53">                book.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="nc" id="L54">                book.setTitle(resultSet.getString(&quot;title&quot;));</span>
+<span class="nc" id="L55">                book.setAuthor(resultSet.getString(&quot;author&quot;));</span>
+<span class="nc" id="L56">                book.setIsbn(resultSet.getString(&quot;isbn&quot;));</span>
+<span class="nc" id="L57">                book.setPublishedYear(resultSet.getString(&quot;published_year&quot;));</span>
+<span class="nc" id="L58">                book.setAvailable(resultSet.getBoolean(&quot;available&quot;));</span>
+            }
+<span class="nc" id="L60">        } catch (SQLException e) {</span>
+<span class="nc" id="L61">            System.err.println(&quot;Erreur lors de la récupération du livre : &quot; + e.getMessage());</span>
+<span class="nc" id="L62">        }</span>
+        
+<span class="nc" id="L64">        return book;</span>
+    }
+    
+
+
+
+    public List&lt;Book&gt; getAllBooks() {
+<span class="fc" id="L71">        List&lt;Book&gt; books = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L72">        String sql = &quot;SELECT * FROM books&quot;;</span>
+        
+<span class="fc" id="L74">        try (Connection connection = DbConnection.getConnection();</span>
+<span class="fc" id="L75">             Statement statement = connection.createStatement();</span>
+<span class="fc" id="L76">             ResultSet resultSet = statement.executeQuery(sql)) {</span>
+             
+<span class="fc bfc" id="L78" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L79">                Book book = new Book();</span>
+<span class="fc" id="L80">                book.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L81">                book.setTitle(resultSet.getString(&quot;title&quot;));</span>
+<span class="fc" id="L82">                book.setAuthor(resultSet.getString(&quot;author&quot;));</span>
+<span class="fc" id="L83">                book.setIsbn(resultSet.getString(&quot;isbn&quot;));</span>
+<span class="fc" id="L84">                book.setPublishedYear(resultSet.getString(&quot;published_year&quot;));</span>
+<span class="fc" id="L85">                book.setAvailable(resultSet.getBoolean(&quot;available&quot;));</span>
+<span class="fc" id="L86">                books.add(book);</span>
+<span class="fc" id="L87">            }</span>
+<span class="nc" id="L88">        } catch (SQLException e) {</span>
+<span class="nc" id="L89">            System.err.println(&quot;Erreur lors de la récupération des livres : &quot; + e.getMessage());</span>
+<span class="fc" id="L90">        }</span>
+        
+<span class="fc" id="L92">        return books;</span>
+    }
+
+
+
+
+    public Optional&lt;Book&gt; getBookById(int id) {
+<span class="fc" id="L99">        String query = &quot;SELECT * FROM books WHERE id = ?&quot;;</span>
+<span class="fc" id="L100">        try (Connection connection = DbConnection.getConnection();</span>
+<span class="fc" id="L101">             PreparedStatement statement = connection.prepareStatement(query)) {</span>
+<span class="fc" id="L102">            statement.setInt(1, id);</span>
+<span class="fc" id="L103">            try (ResultSet resultSet = statement.executeQuery()) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">                if (resultSet.next()) {</span>
+<span class="fc" id="L105">                    Book book = new Book(</span>
+<span class="fc" id="L106">                            resultSet.getInt(&quot;id&quot;),</span>
+<span class="fc" id="L107">                            resultSet.getString(&quot;title&quot;),</span>
+<span class="fc" id="L108">                            resultSet.getString(&quot;author&quot;),</span>
+<span class="fc" id="L109">                            resultSet.getString(&quot;isbn&quot;),</span>
+<span class="fc" id="L110">                            resultSet.getString(&quot;published_year&quot;),</span>
+<span class="fc" id="L111">                            resultSet.getBoolean(&quot;available&quot;)</span>
+                    );
+<span class="fc" id="L113">                    return Optional.of(book);</span>
+                }
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">            }</span>
+<span class="pc bpc" id="L116" title="2 of 4 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L117">            e.printStackTrace();</span>
+<span class="fc" id="L118">        }</span>
+<span class="fc" id="L119">        return Optional.empty();</span>
+    }
+
+
+
+
+
+    public void delete(int id) {
+<span class="fc" id="L127">        String sql = &quot;DELETE FROM books WHERE id = ?&quot;;</span>
+
+<span class="fc" id="L129">        try (Connection connection = DbConnection.getConnection();</span>
+<span class="fc" id="L130">             PreparedStatement statement = connection.prepareStatement(sql)) {</span>
+
+<span class="fc" id="L132">            statement.setInt(1, id);</span>
+<span class="fc" id="L133">            int rowsDeleted = statement.executeUpdate();</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">            if (rowsDeleted &gt; 0) {</span>
+<span class="fc" id="L135">                System.out.println(&quot;Le livre a été supprimé avec succès.&quot;);</span>
+            }
+<span class="nc" id="L137">        } catch (SQLException e) {</span>
+<span class="nc" id="L138">            System.err.println(&quot;Erreur lors de la suppression du livre : &quot; + e.getMessage());</span>
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">    }</span>
+
+
+
+
+    public void update(Book book) {
+<span class="fc" id="L146">        String sql = &quot;UPDATE books SET title = ?, author = ?, isbn = ?, published_year = ?, available = ? WHERE id = ?&quot;;</span>
+
+<span class="fc" id="L148">        try (Connection connection = DbConnection.getConnection();</span>
+<span class="fc" id="L149">             PreparedStatement statement = connection.prepareStatement(sql)) {</span>
+
+<span class="fc" id="L151">            statement.setString(1, book.getTitle());</span>
+<span class="fc" id="L152">            statement.setString(2, book.getAuthor());</span>
+<span class="fc" id="L153">            statement.setString(3, book.getIsbn());</span>
+<span class="fc" id="L154">            statement.setString(4, book.getPublishedYear());</span>
+<span class="fc" id="L155">            statement.setInt(5, book.getId());</span>
+<span class="fc" id="L156">            statement.setBoolean(6, book.isAvailable());</span>
+<span class="fc" id="L157">            int rowsUpdated = statement.executeUpdate();</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">            if (rowsUpdated &gt; 0) {</span>
+<span class="nc" id="L159">                System.out.println(&quot;Le livre a été mis à jour avec succès !&quot;);</span>
+            }
+<span class="nc" id="L161">        } catch (SQLException e) {</span>
+<span class="nc" id="L162">            System.err.println(&quot;Erreur lors de la mise à jour du livre : &quot; + e.getMessage());</span>
+<span class="fc" id="L163">        }</span>
+<span class="fc" id="L164">    }</span>
+
+    public void deleteAllBook() {
+<span class="fc" id="L167">        String query = &quot;DELETE FROM books&quot;;</span>
+<span class="fc" id="L168">        try (Connection connection = DbConnection.getConnection();</span>
+<span class="fc" id="L169">             PreparedStatement statement = connection.prepareStatement(query)) {</span>
+<span class="fc" id="L170">            int rowsDeleted = statement.executeUpdate();</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">            if (rowsDeleted &gt; 0) {</span>
+<span class="fc" id="L172">                System.out.println(&quot;Les books ont été supprimé avec succès.&quot;);</span>
+            }
+<span class="nc" id="L174">        } catch (SQLException e) {</span>
+<span class="nc" id="L175">            LOGGER.log(Level.SEVERE, &quot;Erreur lors de la suppression des books&quot;, e);</span>
+<span class="fc" id="L176">        }</span>
+<span class="fc" id="L177">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
