@@ -41,57 +41,56 @@ class BorrowServiceTest {
 
     @Test
     void testBorrowBook() {
-//        studentService.addStudent(new Student(1, "laila"));
-//        studentService.addStudent(new Student(2, "Amale"));
-//        bookService.addBook(new Book(1, "Java Programming", "John Doe", "123456", "2020",true));
-//        bookService.addBook(new Book(2, "Advanced Java", "Bob", "7891011", "2021",true));
-//
-//        Borrow borrow = new Borrow(1,1,1,new Date(),new Date());
-//        assertEquals("Livre emprunté avec succès!", borrowService.borrowBook(borrow));
-//        Optional<Book> bookOpt = bookService.findBookById(1);
-//        if (bookOpt.isPresent()) {
-//            assertFalse(bookOpt.get().isAvailable());
-//        } else {
-//            fail("Student not found!");
-//        }
-//        bookService.deleteAllBook();
-//        studentService.deleteAllStudents();
-//        borrowService.deleteAllBorrows();
-        System.out.println("False");
+        studentService.addStudent(new Student(1, "laila"));
+        studentService.addStudent(new Student(2, "Amale"));
+        bookService.addBook(new Book(1, "Java Programming", "John Doe", "123456", "2020",true));
+        bookService.addBook(new Book(2, "Advanced Java", "Bob", "7891011", "2021",true));
+
+        Borrow borrow = new Borrow(1,1,1,new Date(),new Date());
+        assertEquals("Livre emprunté avec succès!", borrowService.borrowBook(borrow));
+        Optional<Book> bookOpt = bookService.findBookById(1);
+        if (bookOpt.isPresent()) {
+            assertFalse(bookOpt.get().isAvailable());
+        } else {
+            fail("Student not found!");
+        }
+        bookService.deleteAllBook();
+        studentService.deleteAllStudents();
+        borrowService.deleteAllBorrows();
 
     }
 
     @Test
     void testReturnBook() {
-//        bookService.deleteAllBook();
-//        studentService.deleteAllStudents();
-//        borrowService.deleteAllBorrows();
-//
-//        studentService.addStudent(new Student(2, "Amale"));
-//        bookService.addBook(new Book(2, "Advanced Java", "Bob", "7891011", "2021",true));
-//        Borrow borrow = new Borrow(2,2,2,new Date(),new Date());
-//        borrowService.borrowBook(borrow);
-//        assertEquals("Livre retourné avec succès!", borrowService.returnBook(2, 2));
-//        Optional<Book> bookOpt = bookService.findBookById(1);
-//        if (bookOpt.isPresent()) {
-//            assertTrue(bookOpt.get().isAvailable());
-//        } else {
-//            fail("livre not found!");
-//        }
-//        bookService.deleteAllBook();
-//        studentService.deleteAllStudents();
-//        borrowService.deleteAllBorrows();
+        bookService.deleteAllBook();
+        studentService.deleteAllStudents();
+        borrowService.deleteAllBorrows();
+
+        studentService.addStudent(new Student(2, "Amale"));
+        bookService.addBook(new Book(2, "Advanced Java", "Bob", "7891011", "2021",true));
+        Borrow borrow = new Borrow(2,2,2,new Date(),new Date());
+        borrowService.borrowBook(borrow);
+        assertEquals("Livre retourné avec succès!", borrowService.returnBook(2, 2));
+        Optional<Book> bookOpt = bookService.findBookById(1);
+        if (bookOpt.isPresent()) {
+            assertTrue(bookOpt.get().isAvailable());
+        } else {
+            fail("livre not found!");
+        }
+        bookService.deleteAllBook();
+        studentService.deleteAllStudents();
+        borrowService.deleteAllBorrows();
         System.out.println("True");
 
     }
 
     @Test
     void testBorrowBookNotAvailable() {
-//        Borrow borrow = new Borrow(-1,1,1,new Date(),null);
-//        Book book = bookDAO.getBookById(1).get();
-//        book.setAvailable(false);
-//        borrowService.borrowBook(borrow);
-//        assertFalse(book.isAvailable());
+        Borrow borrow = new Borrow(-1,1,1,new Date(),null);
+        Book book = bookService.findBookById(1).get();
+        book.setAvailable(false);
+        borrowService.borrowBook(borrow);
+        assertFalse(book.isAvailable());
         System.out.println("False");
 
     }
@@ -99,7 +98,7 @@ class BorrowServiceTest {
     @Test
     void testBorrowBookStudentNotFound() {
         System.out.println("Étudiant ou livre non trouvé.");
-//        Borrow borrow = new Borrow(-1,90,1,new Date(),null);
-//        assertEquals("Étudiant ou livre non trouvé.", borrowService.borrowBook(borrow));
+        Borrow borrow = new Borrow(-1,90,1,new Date(),null);
+        assertEquals("Étudiant ou livre non trouvé.", borrowService.borrowBook(borrow));
     }
 }

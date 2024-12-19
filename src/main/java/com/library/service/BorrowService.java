@@ -32,8 +32,9 @@ public class BorrowService {
     }
 
 
-    public void borrowBook(Borrow borrow) {
+    public short borrowBook(Borrow borrow) {
         borrowDAO.borrowBook(borrow);
+        return 0;
     }
 
 }

@@ -44,9 +44,9 @@ class BookServiceTest {
         Optional<Book> bookOpt = bookService.findBookById(2);
 
         if (bookOpt.isPresent()) {
-            assertEquals("Advanced Java","Advanced Java");
-            assertEquals("654321", "654321");
-            assertEquals("2021", "2021");
+            assertEquals("Advanced Java",bookOpt.get().getTitle());
+            assertEquals("654321", bookOpt.get().getIsbn());
+            assertEquals("2021", bookOpt.get().getPublishedYear());
         } else {
             fail("Student not found!");
         }
