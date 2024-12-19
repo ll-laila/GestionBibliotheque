@@ -38,15 +38,21 @@ pipeline {
         }
     }
    post {
-            success {
-                emailext to: 'lailatimasli1@gmail.com',
-                    subject: 'Build Success',
-                    body: 'Le build a été complété avec succès.'
-            }
-            failure {
-                emailext to: 'lailatimasli1@gmail.com',
-                    subject: 'Build Failed',
-                    body: 'Le build a échoué.'
-            }
+        success {
+            emailext(
+                subject: "Build SUCCESSFUL",
+                body: """<p>Good news! The build succeeded.</p>
+                        <p>Status: SUCCESS</p>""",
+                to: 'lailatimasli1@gmail.com'
+            )
         }
+        failure {
+            emailext(
+                subject: "Build FAILED",
+                body: """<p>Unfortunately, the build has failed.</p>
+                        <p>Status: FAILURE</p>""",
+                to: 'lailatimasli1@gmail.com'
+            )
+        }
+    }
 }
