@@ -39,20 +39,20 @@ pipeline {
     }
    post {
         success {
-            emailext(
-                subject: "Build SUCCESSFUL",
-                body: """<p>Good news! The build succeeded.</p>
-                        <p>Status: SUCCESS</p>""",
-                to: 'lailatimasli1@gmail.com'
-            )
+             echo 'Build SUCCESSFUL'
+             slackSend (
+                   channel: '#test',
+                   color: COLOR_MAP[currentBuild.currentResult],
+                   message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME}"
+           )
         }
         failure {
-            emailext(
-                subject: "Build FAILED",
-                body: """<p>Unfortunately, the build has failed.</p>
-                        <p>Status: FAILURE</p>""",
-                to: 'lailatimasli1@gmail.com'
-            )
+            echo  "Build FAILED"
+            slackSend (
+                   channel: '#test',
+                   color: COLOR_MAP[currentBuild.currentResult],
+                   message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME}"
+            )    
         }
     }
 }
