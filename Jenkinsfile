@@ -37,16 +37,5 @@ pipeline {
             }
         }
     }
-     post {
-            success {
-                emailext to: 'lailatimasli1@gmail.com',
-                    subject: 'Build Success',
-                    body: 'Le build a été complété avec succès.'
-            }
-            failure {
-                emailext to: 'lailatimasli1@gmail.com',
-                    subject: 'Build Failed',
-                    body: 'Le build a échoué.'
-            }
-        }
+  
 }
