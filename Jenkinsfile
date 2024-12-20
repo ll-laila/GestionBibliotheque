@@ -37,5 +37,22 @@ pipeline {
             }
         }
     }
-  
+
+   post {
+        success {
+             echo 'Build SUCCESSFUL'
+             slackSend (
+                   channel: '#test',
+                   message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME}"
+           )
+        }
+        failure {
+            echo  "Build FAILED"
+            slackSend (
+                   channel: '#test',
+                   message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME}"
+            )    
+        }
+    }
+
 }
