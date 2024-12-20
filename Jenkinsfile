@@ -42,7 +42,6 @@ pipeline {
              echo 'Build SUCCESSFUL'
              slackSend (
                    channel: '#test',
-                   color: COLOR_MAP[currentBuild.currentResult],
                    message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME}"
            )
         }
@@ -50,7 +49,6 @@ pipeline {
             echo  "Build FAILED"
             slackSend (
                    channel: '#test',
-                   color: COLOR_MAP[currentBuild.currentResult],
                    message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME}"
             )    
         }
